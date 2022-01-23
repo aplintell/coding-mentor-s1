@@ -18,7 +18,7 @@
 			</c:if>
 
 			<c:if test="${not empty sessionScope.me}">
-				<h3>Hello ${sessionScope.me.firstName}  | Cart(${sessionScope.cart.books.size()})</h3>
+				<h3>Hello ${sessionScope.me.firstName}</h3>
 				<a href="LoginServlet?command=logout">Logout</a>
 			</c:if>
 
@@ -27,30 +27,16 @@
 	</div>
 	<hr>
 	<div id="body">
-		<c:forEach items="${categories}" var="category">
-			<a href="HomeServlet?categoryId=${category.id}">${category.name}</a>
-			<br />
+		<c:forEach	items="${categories}" var="category">
+			<a href="HomeServlet?categoryId=${category.id}">${category.name}</a> <br/>
 		</c:forEach>
-
+		
 		<hr>
-		<!--  Show BOOK LIST -->
-		<c:if test="${not empty books}">
-			<c:forEach items="${books}" var="book">
-				<a href="HomeServlet?bookId=${book.id}">${book.name}</a>
-				<br />
-			</c:forEach>
-		</c:if>
-
-
-		<!-- show BOOK DETAILS -->
-		<c:if test="${not empty book}">
-			<form method="post" action="CartServlet">
-				<input hidden="true" name="bookId" value="${book.id}">
-				<h3>Title : Book DETAILS !!! ${book.name}</h3>
-				<br /> Desciption: ${book.description} <br /> Stock :
-				${book.stock}<br /> <input type="submit" value="Add To Cart">
-			</form>
-		</c:if>
+		
+		<c:forEach	items="${books}" var="book">
+			${book.name} : ${book.description} <br/>
+		</c:forEach>
+		
 	</div>
 </body>
 </html>

@@ -2,7 +2,6 @@ package coding.mentor.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,10 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.mysql.cj.Session;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
 import coding.mentor.dao.StudentDAO;
-import coding.mentor.dto.CartDTO;
 import coding.mentor.entity.Student;
 
 /**
@@ -79,7 +76,6 @@ public class LoginServlet extends HttpServlet {
 				// login success
 				HttpSession session = request.getSession();
 				session.setAttribute("me", student);
-				session.setAttribute("cart", new CartDTO(new ArrayList<>()));
 				response.sendRedirect("HomeServlet");
 			}
 		} catch (SQLException e) {

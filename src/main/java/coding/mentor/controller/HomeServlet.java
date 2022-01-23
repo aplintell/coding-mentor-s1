@@ -41,29 +41,21 @@ public class HomeServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		try {
-			// get Data from Model
-			List<Category> categories = categoryDAO.getAllShowedCategories();
-			// attach Data to request
-			request.setAttribute("categories", categories);
-
-			List<Book> books;
-			// get book details
-			// get parameter bookId -> get 1 BOOK
-			String bookId = request.getParameter("bookId");
-			// get books by category
 			// get categoryId
 			String categoryId = request.getParameter("categoryId");
 
+			// get Data from Model
+			List<Category> categories = categoryDAO.getAllShowedCategories();
+			List<Book> books;
 			if (categoryId != null) {
 				books = bookDAO.getBookByCategoryId(Long.parseLong(categoryId));
-				request.setAttribute("books", books);
-			} else if (bookId != null) {
-				Book book = bookDAO.getBook(Integer.parseInt(bookId));
-				request.setAttribute("book", book);
 			} else {
 				books = bookDAO.getAllBooks();
-				request.setAttribute("books", books);
 			}
+
+			// attach Data to request
+			request.setAttribute("categories", categories);
+			request.setAttribute("books", books);
 
 			// send data to JSP
 			RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
