@@ -60,8 +60,7 @@ public class BookDAO {
 
 		return null;
 	}
-	
-	
+
 	public List<Book> getBookByCategoryId(long categoryId) throws SQLException {
 
 		// access to database to get all Books.
@@ -94,6 +93,53 @@ public class BookDAO {
 				books.add(book);
 			}
 			return books;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				rs.close();
+			}
+			if (ps != null) {
+				ps.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+
+		return null;
+	}
+
+	public Book getBook(long bookId) throws SQLException {
+
+		// access to database to get all Books.
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Book book = null;
+
+		try {
+			// make connection to Mysql
+			conn = DBUtil.makeConnection();
+
+			String sql = "SELECT * FROM book WHERE id = ?";
+
+			// ps -> contain SQL + parameter values
+			ps = conn.prepareStatement(sql);
+			ps.setLong(1, bookId);
+
+			rs = ps.executeQuery();
+
+			// rs
+			if (rs.next()) {
+				book = new Book();
+				book.setId(rs.getLong("id"));
+				book.setName(rs.getString("name"));
+				book.setStock(rs.getInt("stock"));
+				book.setDescription(rs.getString("description"));
+				book.setCategoryId(rs.getLong("category_id"));
+			}
+			return book;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
