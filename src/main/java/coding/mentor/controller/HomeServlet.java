@@ -53,7 +53,7 @@ public class HomeServlet extends HttpServlet {
 			// get books by category
 			// get categoryId
 			String categoryId = request.getParameter("categoryId");
-
+	
 			if (categoryId != null) {
 				books = bookDAO.getBookByCategoryId(Long.parseLong(categoryId));
 				request.setAttribute("books", books);

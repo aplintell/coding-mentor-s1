@@ -6,6 +6,7 @@ public class Book {
 	private long categoryId;
 	private int stock;
 	private String description;
+	
 
 	public Book() {
 		// TODO Auto-generated constructor stub

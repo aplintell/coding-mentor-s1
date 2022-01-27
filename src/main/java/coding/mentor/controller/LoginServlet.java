@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import coding.mentor.dao.StudentDAO;
 import coding.mentor.dto.CartDTO;
 import coding.mentor.entity.Student;
+import conding.mentor.constant.Constant;
 
 /**
  * Servlet implementation class LoginServlet
@@ -76,7 +77,7 @@ public class LoginServlet extends HttpServlet {
 				// login success
 				HttpSession session = request.getSession();
 				session.setAttribute("me", student);
-				session.setAttribute("cart", new CartDTO(new ArrayList<>()));
+				session.setAttribute(Constant.SESSION_CART, new CartDTO(new ArrayList<>()));
 				response.sendRedirect("HomeServlet");
 			}
 		} catch (SQLException e) {

@@ -18,8 +18,10 @@
 			</c:if>
 
 			<c:if test="${not empty sessionScope.me}">
-				<h3>Hello ${sessionScope.me.firstName} |
-					Cart(${sessionScope.cart.books.size()})</h3>
+				<h3>
+					Hello ${sessionScope.me.firstName} | <a
+						href="CartServlet?action=VIEW">Cart(${sessionScope.cart.books.size()})</a>
+				</h3>
 				<a href="LoginServlet?command=logout">Logout</a>
 			</c:if>
 
@@ -28,15 +30,11 @@
 	</div>
 	<hr>
 	<div id="body">
-		<c:forEach items="${categories}" var="category">
-			<a href="HomeServlet?categoryId=${category.id}">${category.name}</a>
-			<br />
-		</c:forEach>
-
+		<jsp:include page="categories.jsp"></jsp:include>
 		<hr>
 
 		<!--  Show BOOK LIST -->
-		<c:if test="${not empty books}">
+		<c:if test="${not empty books && !showCart}">
 			<c:forEach items="${books}" var="book">
 				<a href="HomeServlet?bookId=${book.id}">${book.name}</a>
 				<br />
@@ -46,12 +44,26 @@
 
 		<!-- show BOOK DETAILS -->
 		<c:if test="${not empty book}">
-			<form method="post" action="CartServlet">
-				<input hidden="true" name="bookId" value="${book.id}">
+			<form method="get" action="CartServlet">
+				<input hidden="true" name="bookId" value="${book.id}"> <input
+					hidden="true" name="action" value="ADD">
 				<h3>Title : Book DETAILS !!! ${book.name}</h3>
 				<br /> Desciption: ${book.description} <br /> Stock :
 				${book.stock}<br /> <input type="submit" value="Add To Cart">
 			</form>
+		</c:if>
+
+
+		<!--  Show CART -->
+		<c:if test="${showCart}">
+			<c:forEach items="${sessionScope.cart.books}" var="book">
+				<a href="HomeServlet?bookId=${book.id}">${book.name}</a>
+				<br />
+			</c:forEach>
+			<c:if test="${empty sessionScope.cart.books}">
+			Cart is empty</c:if>
+			
+			<a href="CartServlet?action=CHECKOUT">Checkout</a>
 		</c:if>
 
 	</div>
